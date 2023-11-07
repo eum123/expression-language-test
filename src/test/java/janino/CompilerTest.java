@@ -18,6 +18,18 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * <pre>
+ * 확인된 내용
+ *  - 동적으로 class compile해서 reflection을 이용하여 객체를 생성하여 사용 가능하다.
+ *  - static method 뿐만 아니라 일반 method도 가능
+ *  - 하나의 method에 최대 150k 까지 가능하고 그 이상이 필요한 경우 method를 분리해서 가능하다.
+ *  - method의 수는 상관없음(100까지 테스트함)
+ *  - 17M 크기의  class를 compile시 상당히 오래 걸림.(종료되지 않음.)
+ *  - 9M 크기의 class를 compile시 121초, 실행은 0.174초
+ *  - 단순 if문 으로 크기만 생성한거라 업무 적용시 소요시간이 더 커질수 있음.
+ * </pre>
+ */
 public class CompilerTest {
     @Test
     public void test() throws Exception {
@@ -151,14 +163,41 @@ public class CompilerTest {
         builder.append("import java.util.Map; ");
         builder.append("import java.lang.Integer; ");
         builder.append("public class RuleId {");
+
+
+        //
+        for(int i=0 ;i<50 ;i++) {
+            builder.append("    public Map<String, Object> meth" + i + "(Map<String, Object> parameter) {");
+            builder.append("        Map<String, Object> map = new HashMap();");
+
+            for (int j = 0; j < 2000; j++) {
+                builder.append("        if((Integer)parameter.get(\"홍길동\") > 0) {");
+                builder.append("            map.put(\"홍길동\", \"1\");");
+                builder.append("        }");
+            }
+            builder.append("        return map;");
+            builder.append("    }");
+        }
+        //
+
         builder.append("    public Map<String, Object> meth(Map<String, Object> parameter) {");
         builder.append("        Map<String, Object> map = new HashMap();");
-        builder.append("        if((Integer)parameter.get(\"홍길동\") > 0) {");
-        builder.append("            map.put(\"홍길동\", \"1\");");
-        builder.append("        }");
+
+        for(int i=0 ; i<2000 ;i++) {
+            builder.append("        if((Integer)parameter.get(\"홍길동\") > 0) {");
+            builder.append("            map.put(\"홍길동\", \"1\");");
+            builder.append("        }");
+        }
+
+        for(int i=0 ;i<50 ;i++) {
+            builder.append("        meth" + i +"(parameter);");
+        }
         builder.append("        return map;");
         builder.append("    }");
+
         builder.append("}");
+
+        System.out.println(builder.length());
 
         // Now compile two units from strings:
         compiler.compile(new Resource[] {
@@ -190,7 +229,7 @@ public class CompilerTest {
 
                     if(method.getName().equals("meth")) {
                         Map map = new HashMap();
-                        map.put("홍길동", -1);
+                        map.put("홍길동", 1);
                         System.out.println(method.invoke(obj, map));
                     }
                 }
