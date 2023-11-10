@@ -27,6 +27,11 @@
             <artifactId>janino</artifactId>
             <version>3.1.10</version>
         </dependency>
+        <dependency>
+            <groupId>org.codehaus.janino</groupId>
+            <artifactId>commons-compiler-jdk</artifactId>
+            <version>3.1.10</version>
+        </dependency>
 
         <dependency>
             <groupId>org.mvel</groupId>
@@ -50,6 +55,12 @@
             <groupId>de.odysseus.juel</groupId>
             <artifactId>juel-spi</artifactId>
             <version>2.2.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.scireum</groupId>
+            <artifactId>parsii</artifactId>
+            <version>4.0</version>
         </dependency>
 
 
