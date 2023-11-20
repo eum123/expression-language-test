@@ -309,7 +309,7 @@ public class CompilerTest {
     }
 
     @Test
-    public void test3() throws Exception {
+    public void classloaderTest() throws Exception {
         ICompiler compiler = CompilerFactoryFactory
                 .getDefaultCompilerFactory(CompilerTest.class.getClassLoader())
                 .newCompiler();
@@ -328,17 +328,43 @@ public class CompilerTest {
         List<Resource> resources = new ArrayList();
         resources.add(new StringResource(
                 "pkg1/A.java",
-                "package pkg1; public class A { public static int meth() { return pkg2.B.meth(); } }"
+                "package pkg1; public class A { public static int meth() { return 2; } }"
         ));
-        resources.add(new StringResource(
-                "pkg2/B.java",
-                "package pkg2; public class B { public static int meth() { return 77;            } }"
-        ));
+//        resources.add(new StringResource(
+//                "pkg1/A.java",
+//                "package pkg1; public class A { public static int meth() { return pkg2.B.meth(); } }"
+//        ));
+//        resources.add(new StringResource(
+//                "pkg2/B.java",
+//                "package pkg2; public class B { public static int meth() { return 77;            } }"
+//        ));
 
         // Now compile two units from strings:
         compiler.compile(resources.toArray(new Resource[resources.size()]));
 
         System.out.println(classes);
+
+
+        classes.entrySet().forEach(x -> {
+            System.out.println(x.getKey() + ":" + x.getValue());
+        });
+
+        //디자이너에서 compile한다
+        //class 파일을 배포한다.
+        //class를 load 한다
+        //instance를 생성하여 사용한다.
+
+//        CustomClassLoader m = new CustomClassLoader();
+//        classes.entrySet().forEach(x -> {
+//            Class cccc = m.load("pkg1/A.class", x.getValue());
+//
+//
+//            System.out.println(cccc);
+//        });
+
+
+
+
 
         // Set up a class loader that uses the generated classes.
         ClassLoader cl = new ResourceFinderClassLoader(
@@ -346,30 +372,35 @@ public class CompilerTest {
                 ClassLoader.getSystemClassLoader() // parent
         );
 
+        System.out.println(cl.loadClass("pkg1.A"));
 
-        System.out.println(cl.loadClass("pkg1.A").getDeclaredMethod("meth").invoke(null));
-
-
-        resources.add(new StringResource(
-                "pkg1/C.java",
-                "package pkg1; public class C { public static int meth() { return pkg1.A.meth(); } }"
-        ));
-
-
-//        compiler.setClassFileFinder(mapResourceFinder);
-        compiler.compile(resources.toArray(new Resource[resources.size()]));
-
-        System.out.println(classes);
-
-
-        cl = new ResourceFinderClassLoader(
-                new MapResourceFinder(classes),    // resourceFinder
-                ClassLoader.getSystemClassLoader()  // parent
-        );
-
-        System.out.println("C:" + cl.loadClass("pkg1.C").getDeclaredMethod("meth").invoke(null));
-        System.out.println("A:" + cl.loadClass("pkg1.A").getDeclaredMethod("meth").invoke(null));
-
-        //Assert.assertEquals(77, cl.loadClass("pkg1.A").getDeclaredMethod("meth").invoke(null));
+//
+//
+//        System.out.println(cl.loadClass("pkg1.A").getDeclaredMethod("meth").invoke(null));
+//
+//
+//        resources.add(new StringResource(
+//                "pkg1/C.java",
+//                "package pkg1; public class C { public static int meth() { return pkg1.A.meth(); } }"
+//        ));
+//
+//
+////        compiler.setClassFileFinder(mapResourceFinder);
+//        compiler.compile(resources.toArray(new Resource[resources.size()]));
+//
+//        System.out.println(classes);
+//
+//
+//        cl = new ResourceFinderClassLoader(
+//                new MapResourceFinder(classes),    // resourceFinder
+//                ClassLoader.getSystemClassLoader()  // parent
+//        );
+//
+//        System.out.println("C:" + cl.loadClass("pkg1.C").getDeclaredMethod("meth").invoke(null));
+//        System.out.println("A:" + cl.loadClass("pkg1.A").getDeclaredMethod("meth").invoke(null));
+//
+//        //Assert.assertEquals(77, cl.loadClass("pkg1.A").getDeclaredMethod("meth").invoke(null));
     }
+
+
 }
