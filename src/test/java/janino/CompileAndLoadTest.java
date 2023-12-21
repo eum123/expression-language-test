@@ -290,4 +290,48 @@ public class CompileAndLoadTest {
 
         out.close();
     }
+
+    @Test
+    public void extension() throws Exception {
+        ICompiler compiler = CompilerFactoryFactory
+                .getDefaultCompilerFactory(Thread.currentThread().getContextClassLoader())
+                .newCompiler();
+
+        compiler.setVerbose(true);
+
+        // Store generated .class files in a Map:
+        Map<String, byte[]> classes = new HashMap<String, byte[]>();
+
+        MapResourceCreator mapResourceCreator = new MapResourceCreator(classes);
+
+        compiler.setClassFileCreator(mapResourceCreator);
+
+        MapResourceFinder mapResourceFinder = new MapResourceFinder(classes);
+
+        List<Resource> resources = new ArrayList();
+        resources.add(new StringResource(
+                "pkg1/A.java",
+                "package pkg1; import com.example.mvel.MvelApplication; public class A { public static int meth() { return 2; } }"
+        ));
+
+
+        // Now compile two units from strings:
+        compiler.compile(resources.toArray(new Resource[resources.size()]));
+
+        System.out.println(classes);
+
+        FileOutputStream out = new FileOutputStream(new File("/Users/manjineum/Desktop/00.project/99.my/30.EL/expression-language-test/src/test/resources/classes/A.rule"));
+        out.write(classes.get("pkg1/A.class"));
+        out.flush();
+
+        out.close();
+
+        CustomClassLoader loader = new CustomClassLoader();
+        Class a = loader.load("/Users/manjineum/Desktop/00.project/99.my/30.EL/expression-language-test/src/test/resources/classes/A.rule", "pkg1.A");
+
+        Object obj = a.newInstance();
+
+        Object result = a.getMethod("meth").invoke(obj);
+        System.out.println("result :" + result);
+    }
 }
