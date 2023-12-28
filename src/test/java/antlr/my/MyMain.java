@@ -8,6 +8,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 public class MyMain {
     public static void main(String ...args) throws Exception {
         String data = "(1 + 2) * 3;";
+        //data = "(a >    10 || 한글 == \"값\") && \"값\" != 변수 ;";
         ExprLexer lexer = new ExprLexer(CharStreams.fromString(data));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         ExprParser parser = new ExprParser(tokens);

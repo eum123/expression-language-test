@@ -38,6 +38,7 @@ public class BuildAstVisitor extends ExprBaseVisitor<AstNodes> implements ExprVi
                 op = Operator.DIV;
                 break;
         }
+
         return new AstNodes(
                 op,
                 visit(ctx.getChild(0)),
@@ -49,8 +50,9 @@ public class BuildAstVisitor extends ExprBaseVisitor<AstNodes> implements ExprVi
     public AstNodes visitAtomExpr(ExprParser.AtomExprContext ctx) {
 
         //type 구분
-//        System.out.println(ctx.atom().INT());
-//        System.out.println(ctx.atom().DOUBLE());
+        System.out.println("int?" + ctx.atom().INT());
+        System.out.println("double?"+ ctx.atom().DOUBLE());
+
 
         AstNodes node = new AstNodes(Operator.atom, null, null);
 

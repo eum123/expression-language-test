@@ -23,5 +23,25 @@ public class AstCall {
 
                 break;
         }
+
+
+//        switch(node.op) {
+//            case sqrt:
+//                depth++;
+//                System.out.println("sqrt");
+//                Call(node.left, depth--);
+//                break;
+//            case num:
+//                System.out.println(node.result);
+//                break;
+//            case var:
+//                System.out.println(node.variableName);
+//                break;
+//            default:
+//                System.out.println(node.op.name());
+//                Call(node.left, ++depth);
+//                Call(node.right, depth--);
+//                break;
+//        }
     }
 }

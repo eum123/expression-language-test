@@ -11,8 +11,10 @@ expr:	expr op=('*' | '/') expr                # infixExpr
     |   expr op=('==' | '!=') expr              # equalExpr
     |   expr '&&' expr                          # andExpr
     |   expr '||' expr                          # orExpr
+    |   customFunction                          # customFunctionExpr
     |   expr '.' CONTAINS '(' expr ')'          # containsExpr
     |   '(' expr ')'                            # parensExpr
+    |   expr '?' expr ':' expr                  # ternaryExpr
     |	atom                                    # atomExpr
     |   array                                   # arrayExpr
     ;
@@ -20,6 +22,8 @@ expr:	expr op=('*' | '/') expr                # infixExpr
 array:  '[' ( expr ( ',' expr )* )? ']'
     ;
 
+customFunction: CUSTOM_FUNCTION '(' ( expr ( ',' expr )* )? ')'
+    ;
 
 atom:   INT
     |   DOUBLE
@@ -30,10 +34,11 @@ atom:   INT
 
 fragment DIGIT: [0-9];
 CONTAINS: 'contains';
+CUSTOM_FUNCTION: ('myName' | 'myAge');
 INT: DIGIT+;
 DOUBLE: DIGIT+ ('.' DIGIT)*;
 BOOLEAN: ('true' | 'fase');
-STRING : '"' ( ~ '"' )* '"' ;
+STRING : ('"' ( ~ '"' )* '"' | '\'' ( ~ '\'' )* '\'') ;
 VARIABLE: [a-zA-Z가-힣_][a-zA-Z_가-힣0-9]*;
 WS: [ \t\r\n]+ -> skip ;
 NEWLINE : [\r\n]+ -> skip;

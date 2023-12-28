@@ -24,6 +24,13 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitInfixExpr(ExprParser.InfixExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code arrayExpr}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArrayExpr(ExprParser.ArrayExprContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code atomExpr}
 	 * labeled alternative in {@link ExprParser#expr}.
 	 * @param ctx the parse tree
@@ -31,12 +38,66 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAtomExpr(ExprParser.AtomExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code orExpr}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOrExpr(ExprParser.OrExprContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code parensExpr}
 	 * labeled alternative in {@link ExprParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitParensExpr(ExprParser.ParensExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code customFunctionExpr}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCustomFunctionExpr(ExprParser.CustomFunctionExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code containsExpr}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitContainsExpr(ExprParser.ContainsExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code relationExpr}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRelationExpr(ExprParser.RelationExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code equalExpr}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEqualExpr(ExprParser.EqualExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code andExpr}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAndExpr(ExprParser.AndExprContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ExprParser#array}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArray(ExprParser.ArrayContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ExprParser#customFunction}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCustomFunction(ExprParser.CustomFunctionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ExprParser#atom}.
 	 * @param ctx the parse tree
