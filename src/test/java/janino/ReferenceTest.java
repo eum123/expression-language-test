@@ -40,10 +40,10 @@ public class ReferenceTest {
         });
 
         // Set up a class loader that uses the generated classes.
-//        ClassLoader cl = new ResourceFinderClassLoader(
-//                new MapResourceFinder(classes),    // resourceFinder
-//                ClassLoader.getSystemClassLoader() // parent
-//        );
+        ClassLoader cl = new ResourceFinderClassLoader(
+                new MapResourceFinder(classes),    // resourceFinder
+                ClassLoader.getSystemClassLoader() // parent
+        );
 
         FileOutputStream out = new FileOutputStream(new File("/Users/manjineum/Desktop/00.project/99.my/30.EL/expression-language-test/src/test/resources/classes/A.class"));
         out.write(classes.get("pkg1/A.class"));

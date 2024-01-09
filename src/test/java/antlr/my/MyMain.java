@@ -2,14 +2,19 @@ package antlr.my;
 
 import antlr.my.gen.ExprLexer;
 import antlr.my.gen.ExprParser;
-import org.antlr.v4.runtime.CharStreams;
+import org.antlr.runtime.ANTLRStringStream;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 public class MyMain {
     public static void main(String ...args) throws Exception {
         String data = "(1 + 2) * 3;";
         //data = "(a >    10 || 한글 == \"값\") && \"값\" != 변수 ;";
-        ExprLexer lexer = new ExprLexer(CharStreams.fromString(data));
+
+
+        CharStream stream = new ANTLRInputStream(data);
+        ExprLexer lexer = new ExprLexer(stream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         ExprParser parser = new ExprParser(tokens);
 
@@ -37,7 +42,9 @@ public class MyMain {
 
         for(int i=0 ;i<1 ;i++) {
 
-            ExprLexer lexer = new ExprLexer(CharStreams.fromString(i + " + " + data));
+            CharStream stream = new ANTLRInputStream(i + " + " + data);
+
+            ExprLexer lexer = new ExprLexer(stream);
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             ExprParser parser = new ExprParser(tokens);
 

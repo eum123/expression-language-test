@@ -73,7 +73,7 @@
         <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>antlr4</artifactId>
-            <version>4.13.1</version>
+            <version>4.2.2</version>
         </dependency>
 <!--        <dependency>-->
 <!--            <groupId>org.antlr</groupId>-->
@@ -123,10 +123,10 @@
             <plugin>
                 <groupId>org.antlr</groupId>
                 <artifactId>antlr4-maven-plugin</artifactId>
-                <version>4.3</version>
+                <version>4.2.2</version>
                 <configuration>
-                    <sourceDirectory>src/main/resources/antlr</sourceDirectory>
-                    <outputDirectory>src/main/generated-sources</outputDirectory>
+                    <sourceDirectory>src/test/resources/antlr</sourceDirectory>
+                    <outputDirectory>src/test/java/antlr/my/gen</outputDirectory>
                     <visitor>true</visitor>
                     <listener>true</listener>
                     <options>
@@ -146,7 +146,7 @@
                 <configuration>
                     <filesets>
                         <fileset>
-                            <directory>src/main/generated-sources</directory>
+                            <directory>src/test/java/antlr/my/gen</directory>
                             <includes>
                                 <include>**/*</include>
                             </includes>

@@ -25,4 +25,8 @@ public class CustomClassLoader extends ClassLoader {
         }
 
     }
+
+    public void resolve(Class clazz) {
+        super.resolveClass(clazz);
+    }
 }

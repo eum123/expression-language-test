@@ -55,8 +55,8 @@ public class CompilerTest {
         // Now compile two units from strings:
         compiler.compile(new Resource[] {
                 new StringResource(
-                        "pkg1/A.java",
-                        "package pkg1; public class A { public static int meth() { return pkg2.B.meth(); } }"
+                        "a.pkg1.A.java",
+                        "package a.pkg1; public class A { public static int meth() { return pkg2.B.meth(); } }"
                 ),
                 new StringResource(
                         "pkg2/B.java",
@@ -70,9 +70,11 @@ public class CompilerTest {
                 ClassLoader.getSystemClassLoader() // parent
         );
 
+        System.out.println(classes);
+
         long start = System.currentTimeMillis();
 
-        System.out.println(cl.loadClass("pkg1.A").getDeclaredMethod("meth").invoke(null));
+        System.out.println(cl.loadClass("a.pkg1.A").getDeclaredMethod("meth").invoke(null));
 
         System.out.println(System.currentTimeMillis() - start);
 

@@ -313,6 +313,10 @@ public class CompileAndLoadTest {
                 "pkg1/A.java",
                 "package pkg1; import com.example.mvel.MvelApplication; public class A { public static int meth() { return 2; } }"
         ));
+        resources.add(new StringResource(
+                "pkg2/A.java",
+                "package pkg2; import com.example.mvel.MvelApplication; public class A { public static int meth() { return 2; } }"
+        ));
 
 
         // Now compile two units from strings:
@@ -329,9 +333,15 @@ public class CompileAndLoadTest {
         CustomClassLoader loader = new CustomClassLoader();
         Class a = loader.load("/Users/manjineum/Desktop/00.project/99.my/30.EL/expression-language-test/src/test/resources/classes/A.rule", "pkg1.A");
 
+
+        System.out.println(loader.loadClass("pkg1.A"));
+
+
         Object obj = a.newInstance();
 
         Object result = a.getMethod("meth").invoke(obj);
         System.out.println("result :" + result);
+
+
     }
 }
