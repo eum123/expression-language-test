@@ -31,7 +31,9 @@ public class CompileAndLoadTest {
     @Test
     public void writeClass() throws Exception {
         ICompiler compiler = CompilerFactoryFactory
-                .getDefaultCompilerFactory(CompileAndLoadTest.class.getClassLoader())
+                //.getDefaultCompilerFactory(CompileAndLoadTest.class.getClassLoader())
+                .getDefaultCompilerFactory(ClassLoader.getSystemClassLoader())
+
                 .newCompiler();
 
         compiler.setVerbose(true);
@@ -47,7 +49,7 @@ public class CompileAndLoadTest {
 
         List<Resource> resources = new ArrayList();
         resources.add(new StringResource(
-                "pkg1/A.java",
+                "pkg1/a.pkg1.A.java",
                 "package pkg1; public class A { public static int meth() { return 2; } }"
         ));
 
@@ -93,7 +95,7 @@ public class CompileAndLoadTest {
 
         List<Resource> resources = new ArrayList();
         resources.add(new StringResource(
-                "pkg1/A.java",
+                "pkg1/a.pkg1.A.java",
                 "package pkg1; public class A { public static int meth() { return 3; } }"
         ));
 
@@ -274,7 +276,7 @@ public class CompileAndLoadTest {
 
         List<Resource> resources = new ArrayList();
         resources.add(new StringResource(
-                "pkg1/A.java",
+                "pkg1/a.pkg1.A.java",
                 "package pkg1; import com.example.mvel.MvelApplication; public class A { public static int meth() { return 2; } }"
         ));
 
@@ -310,11 +312,11 @@ public class CompileAndLoadTest {
 
         List<Resource> resources = new ArrayList();
         resources.add(new StringResource(
-                "pkg1/A.java",
+                "pkg1/a.pkg1.A.java",
                 "package pkg1; import com.example.mvel.MvelApplication; public class A { public static int meth() { return 2; } }"
         ));
         resources.add(new StringResource(
-                "pkg2/A.java",
+                "pkg2/a.pkg1.A.java",
                 "package pkg2; import com.example.mvel.MvelApplication; public class A { public static int meth() { return 2; } }"
         ));
 

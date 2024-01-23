@@ -46,7 +46,7 @@ public class JaninoAbstractTest {
 
         List<Resource> resources = new ArrayList();
         resources.add(new StringResource(
-                "pkg1/A.java",
+                "pkg1/a.pkg1.A.java",
                 builder.toString()
         ));
 

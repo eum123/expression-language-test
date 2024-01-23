@@ -39,28 +39,27 @@ import java.util.Map;
  *     - 실행 속도는 janino가 조금 빠르다.
  * </pre>
  */
-public class CompilerTest {
+public class CompilerTest  {
     @Test
     public void test() throws Exception {
         ICompiler compiler = CompilerFactoryFactory
                         .getDefaultCompilerFactory(CompilerTest.class.getClassLoader())
                         .newCompiler();
 
-
-
         // Store generated .class files in a Map:
         Map<String, byte[]> classes = new HashMap<String, byte[]>();
         compiler.setClassFileCreator(new MapResourceCreator(classes));
 
+
         // Now compile two units from strings:
         compiler.compile(new Resource[] {
                 new StringResource(
-                        "a.pkg1.A.java",
+                        "a.pkg1.a.pkg1.A.java",
                         "package a.pkg1; public class A { public static int meth() { return pkg2.B.meth(); } }"
                 ),
                 new StringResource(
-                        "pkg2/B.java",
-                        "package pkg2; public class B { public static int meth() { return 77;            } }"
+                        "pkg2/a.pkg1.B.java",
+                        "package pkg2; import jci.MyClass; public class B extends MyClass { public static int meth() { return 77;            } }"
                 ),
         });
 
@@ -329,15 +328,15 @@ public class CompilerTest {
 
         List<Resource> resources = new ArrayList();
         resources.add(new StringResource(
-                "pkg1/A.java",
+                "pkg1/a.pkg1.A.java",
                 "package pkg1; public class A { public static int meth() { return 2; } }"
         ));
 //        resources.add(new StringResource(
-//                "pkg1/A.java",
+//                "pkg1/a.pkg1.A.java",
 //                "package pkg1; public class A { public static int meth() { return pkg2.B.meth(); } }"
 //        ));
 //        resources.add(new StringResource(
-//                "pkg2/B.java",
+//                "pkg2/a.pkg1.B.java",
 //                "package pkg2; public class B { public static int meth() { return 77;            } }"
 //        ));
 
