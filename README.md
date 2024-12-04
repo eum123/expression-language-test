@@ -1,7 +1,3 @@
-# ANTLR 예제 : java 문장 parsing
-```
-// 문자열 비교 == 를 equals 로 변경하기 위해 parsing
-
 grammar JavaParser;
 
 @header {
@@ -16,9 +12,9 @@ expression
     | classMethodExpression
     | expression op=('==' | '!=' | '&&' | '||') expression
     | expression op=('*' | '/' | '+' | '-' | '^' | '%') expression
-    | expression op=('>' | '>=' | '<' | '<=') expression
+    | expression op=('>' | '>=' | '<' | '<=' ) expression
     | expression '?' expression ':' expression
-    | ('>' | '>=' | '<' | '<=') expression
+    | spreadExpression
     | ('-') expression
     | ('!') expression
     | ('++'|'--') expression
@@ -29,6 +25,12 @@ expression
     | ifExpression
     | forExpression
     | atom
+    ;
+
+spreadExpression
+    : ('>' | '>=' | '<' | '<=') expression
+    | (INT_TYPE | LONG_TYPE | DOUBLE_TYPE | userCode) '~' (INT_TYPE | LONG_TYPE | DOUBLE_TYPE | userCode )
+    | userCode
     ;
 
 variableExpression
@@ -66,10 +68,9 @@ numericType
     | floatingPointType
     ;
 
-//userCode은 치환 후 parsing  한다.
-//userCode
-//    : '{' .* '}'
-//    ;
+userCode
+    : USERCODE_NAME
+    ;
 
 block
     : '{' expression? (',' expression)* '}'
@@ -84,6 +85,7 @@ ifExpression
 
 forExpression
     : 'for' '(' expression (',' expression)* ';' expression ';' expression ')' block?
+    | 'for' '(' expression ':' VARIABLE_NAME ')' block?
     ;
 
 integralType
@@ -115,8 +117,9 @@ DOUBLE_TYPE: DIGIT_TYPE+ ('.' DIGIT_TYPE)*;
 BOOLEAN_TYPE: ('true' | 'fase');
 STRING_TYPE : ('"' ( ~ '"' )* '"' | '\'' ( ~ '\'' )* '\'') ;
 VARIABLE_NAME: [a-zA-Z가-힣_][a-zA-Z_가-힣0-9]*;
-WS: [ \t\r\n\u000C]+ -> skip;
+WS: [ \r\n\u000C]+ -> skip;
+//WS: [ \t\r\n\u000C]+ -> skip;
 COMMENT: '/*' .*? '*/' -> skip;
 LINE_COMMENT: '//' ~[\r\n]* -> skip;
-NEWLINE : [\r\n]+ -> skip;
-```
+//NEWLINE : [\r\n]+ -> skip;가
+USERCODE_NAME: '{' [a-zA-Z가-힣_ ?'";:!@#$%^&*{}()][a-zA-Z_가-힣0-9 ?'";:!@#$%^&*{}()]* '}';
