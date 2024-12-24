@@ -110,6 +110,71 @@ public class MvelTest {
         System.out.println(obj);
     }
 
+    @Test
+    public void test_variable_String() throws Exception {
+
+        Map map = new HashMap<>();
+        map.put("MY한글", 1);
+        map.put("b", 2);
+
+        Object obj = MVEL.eval("String name = \"hong\"; return name == \"hong\";", map);
+
+        System.out.println(obj);
+    }
+
+    @Test
+    public void test_variable_String_equals() throws Exception {
+
+        Map map = new HashMap<>();
+        map.put("MY한글", 1);
+        map.put("b", 2);
+
+        Object obj = MVEL.eval("String name = \"hong\"; return name.equals(\"hong\");", map);
+
+        System.out.println(obj);
+    }
+
+    @Test
+    public void test_variable_Integer() throws Exception {
+
+        Map map = new HashMap<>();
+        map.put("MY한글", 1);
+        map.put("b", 2);
+
+        Object obj = MVEL.eval("Integer age = 10; return age < 0;", map);
+
+        System.out.println(obj);
+    }
+    @Test
+    public void test_variable_int() throws Exception {
+
+        Map map = new HashMap<>();
+        map.put("MY한글", 1);
+        map.put("b", 2);
+
+        Object obj = MVEL.eval("int age = 10; return age < 0;", map);
+
+        System.out.println(obj);
+    }
+
+    @Test
+    public void test_variable_for() throws Exception {
+
+        Map map = new HashMap<>();
+        map.put("MY한글", 1);
+        map.put("b", 2);
+
+        String exp = "int sum = 0; " +
+                "for (int i = 0 ;i < 10;i++) { " +
+                "   sum ++;" +
+                "}" +
+                "return sum;";
+
+        Object obj = MVEL.eval(exp, map);
+
+        System.out.println(obj);
+    }
+
 
 
 }

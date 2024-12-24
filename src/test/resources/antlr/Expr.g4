@@ -37,12 +37,12 @@ atom:   INT
     ;
 
 fragment DIGIT: [0-9];
-FUNCTION: [a-zA-Z가-힣_][a-zA-Z_가-힣0-9]*;
-CUSTOM_FUNCTION: ('myName' | 'myAge');
-INT: DIGIT+;
-DOUBLE: DIGIT+ ('.' DIGIT)*;
-BOOLEAN: ('true' | 'fase');
-STRING : ('"' ( ~ '"' )* '"' | '\'' ( ~ '\'' )* '\'') ;
-VARIABLE: [a-zA-Z가-힣_][a-zA-Z_가-힣0-9]*;
-WS: [ \t\r\n]+ -> skip ;
-NEWLINE : [\r\n]+ -> skip;
+fragment FUNCTION: [a-zA-Z가-힣_][a-zA-Z_가-힣0-9]*;
+fragment CUSTOM_FUNCTION: ('myName' | 'myAge');
+fragment INT: DIGIT+;
+fragment DOUBLE: DIGIT+ ('.' DIGIT)*;
+fragment BOOLEAN: ('true' | 'fase');
+fragment STRING : ('"' ( ~ '"' )* '"' | '\'' ( ~ '\'' )* '\'') ;
+fragment VARIABLE: [a-zA-Z가-힣_][a-zA-Z_가-힣0-9]*;
+fragment WS: [ \t\r\n]+ -> skip ;
+fragment NEWLINE : [\r\n]+ -> skip;
